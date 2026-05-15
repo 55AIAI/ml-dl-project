@@ -1,0 +1,16 @@
+Model,Dataset,Test Acc (%),CV Mean±Std,Train Time (s),DR Impact,Interpretability
+KNN,Diabetes,75.0,0.7729±0.031,8.2,N/A,Low
+Random Forest,Diabetes,73.28,0.7785±0.036,15.4,N/A,Medium
+SVM,Diabetes,75.0,0.7785±0.030,45.2,N/A,Low
+Logistic Reg,Diabetes,77.59,0.7822±0.035,3.1,N/A,High
+KNN,Digits,98.15,0.9682±0.006,5.1,N/A,Low
+Random Forest,Digits,97.04,0.9737±0.005,18.6,N/A,Medium
+SVM,Digits,98.89,0.9793±0.009,62.3,N/A,Low
+Logistic Reg,Digits,98.52,0.9634±0.006,2.8,N/A,High
+RF + PCA 95%,Diabetes,74.09,0.7409±0.021,12.1,-1.82%,Medium
+RF + PCA 2D,Diabetes,67.71,0.6771±0.016,8.4,-8.20%,Medium
+RF + PCA 95%,Digits,96.55,0.9655±0.006,14.2,-1.06%,Medium
+RF + PCA 2D,Digits,53.53,0.5353±0.012,6.1,-44.08%,Medium
+MLP,Diabetes,75.0,N/A,120.0,N/A,Low
+Custom CNN,CIFAR-10,10.3,N/A,333.9,N/A,Very Low
+MobileNetV2 TL,CIFAR-10,90.66,N/A,707.7,N/A,Very Low
