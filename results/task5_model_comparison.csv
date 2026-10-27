@@ -1,3 +1,0 @@
-Model,Test Accuracy,Parameters
-Custom CNN,0.10300000011920929,357034
-MobileNetV2 Transfer Learning,0.9065999984741211,2588490

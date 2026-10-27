@@ -1,60 +1,17 @@
-# ═══════════════════════════════════════
-#  .gitignore для ML/DL проекта
-#  Положи этот файл в папку проекта
-# ═══════════════════════════════════════
-
-# ── Виртуальное окружение ── ОБЯЗАТЕЛЬНО убрать (500MB+)
-.venv/
-venv/
-env/
-ENV/
-.env/
-
-# ── Python кэш ──────────────────────────────────────────
-__pycache__/
-*.py[cod]
-*.pyo
-*.pyd
-.Python
-
-# ── Jupyter checkpoint файлы ────────────────────────────
-.ipynb_checkpoints/
-*/.ipynb_checkpoints/
-
-# ── Сохранённые модели (могут быть большими) ────────────
+# Generated experiments and environments
+output/
+results/
 models/
-*.h5
 *.keras
+*.h5
 *.pkl
 *.joblib
-*.pickle
-saved_model/
-
-# ── Данные ──────────────────────────────────────────────
-# diabetes.csv оставляем (маленький, нужен для запуска)
-!diabetes.csv
-# Большие датасеты не грузим — загружаются автоматически
+task*.png
 *.zip
-*.tar.gz
-*.npy
-*.npz
-
-# ── Результаты/графики ──────────────────────────────────
-# Генерируются заново при запуске ноутбуков
-results/*.png
-results/*.jpg
-
-# НО сохраняем CSV с результатами — они важны
-!results/*.csv
-!results/*.txt
-
-# ── IDE файлы ───────────────────────────────────────────
-.idea/
-.vscode/
-*.iml
-
-# ── ОС файлы ────────────────────────────────────────────
-.DS_Store
-.DS_Store?
-Thumbs.db
-desktop.ini
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.env
+.test-tmp/

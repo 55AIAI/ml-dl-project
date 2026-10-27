@@ -1,0 +1,72 @@
+name: Experiment checks
+on: [push, pull_request, workflow_dispatch]
+permissions:
+  contents: read
+env:
+  OMP_NUM_THREADS: "1"
+  OPENBLAS_NUM_THREADS: "1"
+  MKL_NUM_THREADS: "1"
+  MPLBACKEND: Agg
+jobs:
+  regression:
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python run.py --dataset digits --quick --output output/digits
+      - run: python -m pip check
+  notebooks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install -r requirements.txt "nbformat>=5.10,<6"
+      - name: Validate notebook format
+        run: |
+          python - <<'PY'
+          import nbformat
+          from pathlib import Path
+          for path in Path(".").glob("Task*.ipynb"):
+              nbformat.validate(nbformat.read(path, as_version=4))
+          PY
+      - run: python run_notebooks.py --tasks 1 2 3 6 --smoke
+      - uses: actions/upload-artifact@v4
+        with:
+          name: classical-notebook-smoke
+          path: |
+            results/
+            task*.png
+          retention-days: 7
+  deep-notebooks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: python -m pip install -r requirements-deep.txt
+      - run: python -m pip check
+      - run: python run_notebooks.py --tasks 4 5 6 --smoke
+      - run: python -m pip freeze > results/installed-deep-versions.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: synthetic-deep-notebook-smoke
+          path: |
+            results/
+            task*.png
+          retention-days: 7
